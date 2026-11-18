@@ -1,0 +1,24 @@
+.footer{
+    width: 100%;
+}
+
+.footer h5{
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.footer-link {
+    color: #adb5bd;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.footer-link:hover {
+    color: #0d6efd;
+}
+
+.footer p{
+    font-size: 14px;
+    line-height: 1.7;
+}
