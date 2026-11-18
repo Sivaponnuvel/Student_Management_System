@@ -1,0 +1,29 @@
+.features-section {
+    padding: 70px 0;
+    background-color: #ffffff;
+}
+
+.features-section h2 {
+    font-weight: 700;
+    color: #212529;
+}
+
+.feature-card {
+    border: none;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+
+.feature-icon {
+    font-size: 55px;
+    color: #0d6efd;
+}
+
+@media (max-width: 768px){
+    .features-section {
+        padding: 45px 0;
+    }
+}
