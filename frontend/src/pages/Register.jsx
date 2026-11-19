@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import '../styles/Register.css'
+import { NavLink } from 'react-router-dom'
 
 function Register() {
   return (
@@ -33,9 +34,9 @@ function Register() {
                     academic information.
                   </p>
 
-                  <a href="/student/register" className="btn btn-outline-primary mt-3">
+                  <NavLink to="/student/register" className="btn btn-outline-primary mt-3">
                     Register as Student
-                  </a>
+                  </NavLink>
                 </div>
               </div>
             </div>
