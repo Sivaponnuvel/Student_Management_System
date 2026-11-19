@@ -15,3 +15,8 @@
 .navbar-brand i {
     font-size: 24px;
 }
+
+.navbar-nav .nav-link.active {
+    color: #a7d8f9;
+    font-weight: bold;
+}

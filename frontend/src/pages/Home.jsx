@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Features from '../components/Features'
 import '../styles/Home.css'
+import { NavLink } from 'react-router-dom'
 
 function Home() {
   return (
@@ -21,7 +22,7 @@ function Home() {
                 Access your academic information in one place.</p>
 
                 <div className='mt-4'>
-                  <a href="/register" className='btn btn-primary btn-lg me-3'>Get Started</a>
+                  <NavLink to="/register" className='btn btn-primary btn-lg me-3'>Get Started</NavLink>
                   <a href="/login" className='btn btn-outline-primary btn-lg'>Login</a>
                 </div>
               </div>

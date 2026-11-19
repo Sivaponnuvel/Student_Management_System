@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/Footer.css'
+import { NavLink } from 'react-router-dom'
 
 function Footer() {
   return (
@@ -18,10 +19,10 @@ function Footer() {
             <h5>Quick Links</h5>
             <ul className='list-unstyled'>
               <li>
-                <a className='footer-link' href="/">Home</a>
+                <NavLink className='footer-link' to="/">Home</NavLink>
               </li>
               <li>
-                <a className='footer-link' href="/register">Register</a>
+                <NavLink className='footer-link' to="/register">Register</NavLink>
               </li>
               <li>
                 <a className='footer-link' href="/login">Login</a>
