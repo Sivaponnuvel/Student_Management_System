@@ -1,0 +1,26 @@
+.register-section {
+    background-color: #f1f5f9;
+    min-height: 550px;
+    padding: 80px 0;
+}
+
+.register-section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #212529;
+}
+
+.register-card {
+    border: none;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.register-card:hover {
+    transform: translateY(-8px);
+}
+
+.register-icon {
+    font-size: 65px;
+    color: #02b0f5;
+}
