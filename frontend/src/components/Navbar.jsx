@@ -19,7 +19,7 @@ function Navbar() {
                         <NavLink className='nav-link' to="/register">Register</NavLink>
                     </li>
                     <li className='nav-item'>
-                        <a className='nav-link' href="/login">Login</a>
+                        <NavLink className='nav-link' to="/login">Login</NavLink>
                     </li>
                 </ul>
             </div>

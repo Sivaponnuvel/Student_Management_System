@@ -1,6 +1,7 @@
 
 import React from 'react'
 import '../styles/StudentRegister.css'
+import { NavLink } from 'react-router-dom'
 
 function StudentRegister() {
   return (
@@ -146,7 +147,7 @@ function StudentRegister() {
                   </button>
 
                   <p className="text-center mt-4 mb-0">
-                    Already have an account? <a href="/student/login">Login</a>
+                    Already have an account? <NavLink to="/login">Login</NavLink>
                   </p>
 
                 </form>

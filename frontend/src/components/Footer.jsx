@@ -25,7 +25,7 @@ function Footer() {
                 <NavLink className='footer-link' to="/register">Register</NavLink>
               </li>
               <li>
-                <a className='footer-link' href="/login">Login</a>
+                <NavLink className='footer-link' to="/login">Login</NavLink>
               </li>
             </ul>
           </div>

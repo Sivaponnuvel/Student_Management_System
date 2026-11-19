@@ -23,7 +23,7 @@ function Home() {
 
                 <div className='mt-4'>
                   <NavLink to="/register" className='btn btn-primary btn-lg me-3'>Get Started</NavLink>
-                  <a href="/login" className='btn btn-outline-primary btn-lg'>Login</a>
+                  <NavLink to="/login" className='btn btn-outline-primary btn-lg'>Login</NavLink>
                 </div>
               </div>
 
