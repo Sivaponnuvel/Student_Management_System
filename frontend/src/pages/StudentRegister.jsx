@@ -1,9 +1,93 @@
-
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/StudentRegister.css'
 import { NavLink } from 'react-router-dom'
+import axios from 'axios'
 
 function StudentRegister() {
+
+  // Store all form values
+  const [formdata, setFormdata] = useState({
+    username: '',
+    fullname: '',
+    fathername: '',
+    mothername: '',
+    email: '',
+    dob: '',
+    gender: '',
+    password: '',
+    confirm_password: ''
+  });
+
+  // store the error message
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // handle the input changes
+  const handleChange = (e) => {
+    setFormdata({
+      ...formdata,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  // handle the submission
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    // clear the previous error
+    setErrorMessage('')
+
+    // check the password and confirm password
+    if(formdata.password !== formdata.confirm_password){
+      setErrorMessage("Passwords do not match")
+      return
+    }
+
+    try {
+      // send the student data to backend
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/student/register/",
+        {
+          username: formdata.username,
+          fullname: formdata.fullname,
+          fathername: formdata.fathername,
+          mothername: formdata.mothername,
+          email: formdata.email,
+          dob: formdata.dob,
+          gender: formdata.gender,
+          password: formdata.password
+        }
+      )
+      // show the success message
+      alert(response.data.message)
+
+      // clear the form data after successful registration
+      setFormdata({
+        username: '',
+        fullname: '',
+        fathername: '',
+        mothername: '',
+        email: '',
+        dob: '',
+        gender: '',
+        password: '',
+        confirm_password: ''
+      })
+
+    } catch (error) {
+      if(error.response){
+        console.log(error.response.data);
+
+        const errors = Object.values(error.response.data).flat().join('\n');
+
+        setErrorMessage(errors || "Registration failed");
+      }
+      else{
+        // server connection error
+        setErrorMessage("Unable to connect to the server")
+      }
+    }
+  }
+
   return (
     <section className="student-register-section">
       <div className="container">
@@ -22,7 +106,7 @@ function StudentRegister() {
                   </p>
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit}>
 
                   <div className="row">
 
@@ -32,6 +116,8 @@ function StudentRegister() {
                       <input
                         type="text"
                         name="username"
+                        value={formdata.username}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter username"
                         required
@@ -44,6 +130,8 @@ function StudentRegister() {
                       <input
                         type="text"
                         name="fullname"
+                        value={formdata.fullname}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter full name"
                         required
@@ -56,6 +144,8 @@ function StudentRegister() {
                       <input
                         type="text"
                         name="fathername"
+                        value={formdata.fathername}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter father name"
                         required
@@ -68,6 +158,8 @@ function StudentRegister() {
                       <input
                         type="text"
                         name="mothername"
+                        value={formdata.mothername}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter mother name"
                         required
@@ -80,6 +172,8 @@ function StudentRegister() {
                       <input
                         type="email"
                         name="email"
+                        value={formdata.email}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter email address"
                         required
@@ -92,6 +186,8 @@ function StudentRegister() {
                       <input
                         type="date"
                         name="dob"
+                        value={formdata.dob}
+                        onChange={handleChange}
                         className="form-control"
                         required
                       />
@@ -102,6 +198,8 @@ function StudentRegister() {
                       <label className="form-label">Gender</label>
                       <select
                         name="gender"
+                        value={formdata.gender}
+                        onChange={handleChange}
                         className="form-select"
                         defaultValue=""
                         required
@@ -119,6 +217,8 @@ function StudentRegister() {
                       <input
                         type="password"
                         name="password"
+                        value={formdata.password}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter password"
                         required
@@ -131,6 +231,8 @@ function StudentRegister() {
                       <input
                         type="password"
                         name="confirm_password"
+                        value={formdata.confirm_password}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Confirm password"
                         required
@@ -138,6 +240,15 @@ function StudentRegister() {
                     </div>
 
                   </div>
+
+                  {/* display error message */}
+                  {errorMessage && (
+                    <div className='alert alert-danger' role='alert'>
+                      {errorMessage.split('\n').map((message, index) => (
+                        <div key={index}>{message}</div>
+                      ))}
+                    </div>
+                  )}
 
                   <button
                     type="submit"
