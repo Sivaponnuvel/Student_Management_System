@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegisterSerializer
-from .models import Register
+from .serializers import RegisterSerializer, TeacherRegisterSerializer
+from .models import Register, TeacherRegister
 
 # Create your views here.
 
@@ -29,3 +29,11 @@ def student_login(request):
         return Response({"message": "Invalid Password"}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({"message": "Login Successful"}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def teacher_register(request):
+    serializer = TeacherRegisterSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"message": "Registration Successful"}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
