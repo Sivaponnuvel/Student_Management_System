@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import '../styles/StudentRegister.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function StudentRegister() {
+
+  // Navigation hook
+  const navigate = useNavigate();
 
   // Store all form values
   const [formdata, setFormdata] = useState({
@@ -59,6 +62,9 @@ function StudentRegister() {
       )
       // show the success message
       alert(response.data.message)
+
+      // navigate to login page
+      navigate("/login")
 
       // clear the form data after successful registration
       setFormdata({
@@ -201,7 +207,6 @@ function StudentRegister() {
                         value={formdata.gender}
                         onChange={handleChange}
                         className="form-select"
-                        defaultValue=""
                         required
                       >
                         <option value="" disabled>Select Gender</option>
