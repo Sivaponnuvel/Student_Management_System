@@ -12,7 +12,7 @@ def student_register(request):
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response({"message": "Registration successful"}, status=status.HTTP_201_CREATED)
+        return Response({"message": "Student Registration successful"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -28,14 +28,14 @@ def student_login(request):
     if user.password != password:
         return Response({"message": "Invalid Password"}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({"message": "Login Successful"}, status=status.HTTP_200_OK)
+    return Response({"message": "Student Login Successful"}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def teacher_register(request):
     serializer = TeacherRegisterSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response({"message": "Registration Successful"}, status=status.HTTP_201_CREATED)
+        return Response({"message": "Teacher Registration Successful"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -50,4 +50,4 @@ def teacher_login(request):
     if user.password != password:
         return Response({"message": "Invalid Password"}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({"message": "Login Successful"}, status=status.HTTP_200_OK)
+    return Response({"message": "Teacher Login Successful"}, status=status.HTTP_200_OK)
