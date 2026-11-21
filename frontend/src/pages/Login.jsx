@@ -1,11 +1,61 @@
-
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import '../styles/Login.css'
 import { NavLink } from 'react-router-dom'
+import axios from 'axios'
 
 function Login() {
+
+  // store the values
+  const[formdata, setFormdata] = useState({
+    username: "",
+    password: ""
+  });
+
+  // store the error
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // handle the input changes
+  const handleChange = (e) => {
+    setFormdata({
+      ...formdata,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+
+    // clear the previous error message
+    setErrorMessage('');
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/student/login/",
+          formdata
+      )
+      // show the success message
+      alert(response.data.message);
+
+      // clear the form data after successful login
+      setFormdata({
+        username: '',
+        password: ''
+      })
+
+    } catch (error) {
+      if(error.response){
+        console.log(error.response.data);
+
+        setErrorMessage(error.response.data.message || "Login Failed");
+      }
+      else{
+        setErrorMessage("Unable to connect to the server");
+      }
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -27,12 +77,15 @@ function Login() {
                     </p>
                   </div>
 
-                  <form>
+                  <form onSubmit={handleSubmit}>
 
                     <div className="mb-3">
                       <label className="form-label">Username</label>
                       <input
                         type="text"
+                        name='username'
+                        value={formdata.username}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter your username"
                         required
@@ -43,11 +96,21 @@ function Login() {
                       <label className="form-label">Password</label>
                       <input
                         type="password"
+                        name='password'
+                        value={formdata.password}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter your password"
                         required
                       />
                     </div>
+
+                    {/* display the error message */}
+                    {errorMessage && (
+                      <div className='alert alert-danger' role='alert'>
+                        {errorMessage}
+                      </div>
+                    )}
 
                     <button type="submit" className="btn btn-primary w-100 mt-3">
                       Login
