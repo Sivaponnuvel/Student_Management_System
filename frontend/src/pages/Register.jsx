@@ -54,9 +54,9 @@ function Register() {
                     student information.
                   </p>
 
-                  <a href="/teacher/register" className="btn btn-outline-primary mt-3">
+                  <NavLink to="/teacher/register" className="btn btn-outline-primary mt-3">
                     Register as Teacher
-                  </a>
+                  </NavLink>
                 </div>
               </div>
             </div>

@@ -99,7 +99,7 @@ function StudentRegister() {
       <div className="container">
 
         <div className="row justify-content-center">
-          <div className="              ">
+          <div className="col-lg-9">
 
             <div className="card student-register-card shadow-sm">
               <div className="card-body p-4 p-md-5">
