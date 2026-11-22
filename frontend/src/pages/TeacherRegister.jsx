@@ -1,7 +1,95 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/TeacherRegister.css'
+import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function TeacherRegister() {
+
+    // Navigation hook
+    const navigate = useNavigate();
+
+    // store the all form values
+    const [formdata, setFormdata] = useState({
+        username: "",
+        fullname: "",
+        email: "",
+        dob: "",
+        gender: "",
+        subject: "",
+        password: "",
+        confirm_password: ""
+    });
+
+    // store the error message
+    const [errorMessage, setErrorMessage] = useState('');
+
+    // handle the input changes
+    const handleChange = (e) => {
+        setFormdata({
+            ...formdata,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    // handle the submission
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        // clear the error message
+        setErrorMessage('');
+
+        // check the password and confirm password
+        if(formdata.password !== formdata.confirm_password){
+            setErrorMessage("Passwords do not match");
+            return
+        }
+
+        try {
+            // send data to backend
+            const response = await axios.post(
+                "http://127.0.0.1:8000/api/teacher/register/",
+                {
+                    username: formdata.username,
+                    fullname: formdata.fullname,
+                    email: formdata.email,
+                    dob: formdata.dob,
+                    gender: formdata.gender,
+                    subject: formdata.subject,
+                    password: formdata.password
+                }
+            )
+            // show the success message
+            alert(response.data.message);
+            // navigate the login page
+            navigate('/login')
+
+            // clear the formdata after successful registration
+            setFormdata({
+                username: "",
+                fullname: "",
+                email: "",
+                dob: "",
+                gender: "",
+                subject: "",
+                password: "",
+                confirm_password: ""
+            })
+
+        } catch (error) {
+            if(error.response){
+                console.log(error.response.data);
+
+                const errors = Object.values(error.response.data).flat().join("\n");
+
+                setErrorMessage(errors || "Registration failed")
+            }
+            else{
+                // server connection error
+                setErrorMessage("unable to connect to the server")
+            }
+        }
+    }
+
   return (
     <section className="student-register-section">
       <div className="container">
@@ -20,7 +108,7 @@ function TeacherRegister() {
                   </p>
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit}>
 
                   <div className="row">
 
@@ -30,6 +118,8 @@ function TeacherRegister() {
                       <input
                         type="text"
                         name="username"
+                        value={formdata.username}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter username"
                         required
@@ -42,6 +132,8 @@ function TeacherRegister() {
                       <input
                         type="text"
                         name="fullname"
+                        value={formdata.fullname}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter full name"
                         required
@@ -54,6 +146,8 @@ function TeacherRegister() {
                       <input
                         type="email"
                         name="email"
+                        value={formdata.email}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter email address"
                         required
@@ -66,6 +160,8 @@ function TeacherRegister() {
                       <input
                         type="date"
                         name="dob"
+                        value={formdata.dob}
+                        onChange={handleChange}
                         className="form-control"
                         required
                       />
@@ -76,8 +172,9 @@ function TeacherRegister() {
                       <label className="form-label">Gender</label>
                       <select
                         name="gender"
+                        value={formdata.gender}
+                        onChange={handleChange}
                         className="form-select"
-                        defaultValue=""
                         required
                       >
                         <option value="" disabled>Select Gender</option>
@@ -93,8 +190,9 @@ function TeacherRegister() {
                       <label className="form-label">Subjects</label>
                       <select
                         name="subject"
+                        value={formdata.subject}
+                        onChange={handleChange}
                         className="form-select"
-                        defaultValue=""
                         required
                       >
                         <option value="" disabled>Select Subject</option>
@@ -112,6 +210,8 @@ function TeacherRegister() {
                       <input
                         type="password"
                         name="password"
+                        value={formdata.password}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Enter password"
                         required
@@ -124,6 +224,8 @@ function TeacherRegister() {
                       <input
                         type="password"
                         name="confirm_password"
+                        value={formdata.confirm_password}
+                        onChange={handleChange}
                         className="form-control"
                         placeholder="Confirm password"
                         required
@@ -131,6 +233,15 @@ function TeacherRegister() {
                     </div>
 
                   </div>
+
+                  {/* display the error message */}
+                  {errorMessage &&(
+                    <div className='alert alert-danger' role='alert'>
+                        {errorMessage.split('\n').map((message, index) => (
+                            <div key={index}>{message}</div>
+                        ))}
+                    </div>
+                  )}
 
                   <button
                     type="submit"
@@ -140,7 +251,7 @@ function TeacherRegister() {
                   </button>
 
                   <p className="text-center mt-4 mb-0">
-                    Already have an account? <a href="/login">Login</a>
+                    Already have an account? <NavLink to="/login">Login</NavLink>
                   </p>
 
                 </form>
