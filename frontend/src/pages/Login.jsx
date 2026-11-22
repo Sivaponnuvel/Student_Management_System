@@ -10,7 +10,8 @@ function Login() {
   // store the values
   const[formdata, setFormdata] = useState({
     username: "",
-    password: ""
+    password: "",
+    role: ""
   });
 
   // store the error
@@ -31,9 +32,17 @@ function Login() {
     setErrorMessage('');
 
     try {
+
+      const url = formdata.role === "student" 
+        ? "http://127.0.0.1:8000/api/student/login/"
+        : "http://127.0.0.1:8000/api/teacher/login/";
+
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/student/login/",
-          formdata
+        url,
+          {
+            username: formdata.username,
+            password: formdata.password
+          }
       )
       // show the success message
       alert(response.data.message);
@@ -41,7 +50,8 @@ function Login() {
       // clear the form data after successful login
       setFormdata({
         username: '',
-        password: ''
+        password: '',
+        role: ''
       })
 
     } catch (error) {
@@ -78,6 +88,21 @@ function Login() {
                   </div>
 
                   <form onSubmit={handleSubmit}>
+
+                    <div className="mb-3">
+                      <label className="form-label">Login As</label>
+                      <select
+                        name="role"
+                        value={formdata.role}
+                        onChange={handleChange}
+                        className="form-select"
+                        required
+                      >
+                        <option value="" disabled>Select As</option>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                      </select>
+                    </div>
 
                     <div className="mb-3">
                       <label className="form-label">Username</label>
