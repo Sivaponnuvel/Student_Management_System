@@ -101,7 +101,7 @@ function TeacherRegister() {
               <div className="card-body p-4 p-md-5">
 
                 <div className="text-center mb-4">
-                  <i className="bi bi-mortarboard-fill register-icon"></i>
+                  <i className="bi bi-person-workspace register-icon"></i>
                   <h2 className="mt-3">Teacher Registration</h2>
                   <p className="text-secondary">
                     Create your teacher account
